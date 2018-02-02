@@ -5,6 +5,9 @@ import numpy as np
 import matplotlib as pyplot
 import math
 import pylab
+import scipy as sc
+
+
 
 '''
 x = np.linspace(-15,15,100) # 100 linearly spaced numbers
