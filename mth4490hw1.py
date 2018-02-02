@@ -13,13 +13,14 @@ def g(t):
 
 def f(t,w):
 	return 4*t - 2*w
-	
+'''	
 def Euler(f,a,b,y0,n):
+        
         h = (b-a)/float(n)
         x = a
         y = y0
         for i in range(n):
-                
+                print(y)
                 y += h*f(x,y)
                 x += h
         return y
@@ -37,6 +38,22 @@ print(Euler(f,0,1,0,4))
 #print(Euler(f,0,1,0,20))
 
 #print(Euler(f,0,1,0,50))
+'''
+def trap(f,a,b,y0,n):
+        h = (b-a) / float(n)
+        ti = a
+        wi = y0
+        for i in range(n):
+                print(wi)
+                wi = wi + (h/2)*(f(ti,wi)+ f((ti+h), wi+ h*(f(ti,wi))))
+                ti = ti + h
+
+        return wi
+
+print(trap(f,0,1,0,4))
+
+
+        
 
 
 
