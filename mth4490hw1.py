@@ -18,16 +18,19 @@ def g(t):
 def f(t,w):
 	return 4*t - 2*w
 	
-def Euler(f,a,b,y0,n):
-        
+def Euler(f,g,a,b,y0,n):
+        g = [g(a)]
         h = (b-a)/float(n)
         t = [a]
         w = [y0]
+        err = [0]
         for i in range(n):
                 print(w[i])
+                g.append(g(t[i]))
                 w.append(w[i] + h*f(t[i],w[i]))
                 t.append(t[i] + h)
-        return w,t
+                err.append(g[i] - w[i])
+        return w,t,err,g
 
 
 
@@ -42,6 +45,11 @@ def trap(f,a,b,y0,n):
                 t.append(t[i] + h)
 
         return w,t
+
+def step(k):
+        return 0.1 * 2^(-k)
+
+
 
 
 
@@ -69,7 +77,7 @@ print(g(1))
 
 #Test Euler at y0 = 0 with 4  interations
 '''
-print(Euler(f,0,1,0,4))
+print(Euler(f,g,0,1,0,4))
 '''
 #print(Euler(f,0,1,0,10))
 
