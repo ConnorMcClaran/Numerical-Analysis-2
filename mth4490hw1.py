@@ -21,13 +21,13 @@ def f(t,w):
 def Euler(f,a,b,y0,n):
         
         h = (b-a)/float(n)
-        x = a
-        y = y0
+        t = [a]
+        w = [y0]
         for i in range(n):
-                print(y)
-                y += h*f(x,y)
-                x += h
-        return y
+                print(w[i])
+                w.append(w[i] + h*f(t[i],w[i]))
+                t.append(t[i] + h)
+        return w,t
 
 
 
@@ -49,7 +49,7 @@ def trap(f,a,b,y0,n):
 
 
 #print(trap(f,0,1,0,4))
-
+'''
 # y0 = 1
 
 def h(t,w):
@@ -62,15 +62,15 @@ print(trap(h,0,1,1,10))
 
 
 
-'''
+
 #Test genral solution
 
 print(g(1))
 
 #Test Euler at y0 = 0 with 4  interations
-
+'''
 print(Euler(f,0,1,0,4))
-
+'''
 #print(Euler(f,0,1,0,10))
 
 #print(Euler(f,0,1,0,20))
