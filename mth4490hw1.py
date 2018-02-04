@@ -4,7 +4,7 @@
 
 import math
 import numpy as np
-import matplotlib as pyplot
+from matplotlib import pyplot
 
 #y'(t) = 4t - 2y(t) d'Alembert's equation
 
@@ -19,33 +19,33 @@ def f(t,w):
 	return 4*t - 2*w
 	
 def Euler(f,g,a,b,y0,n,h):
-        g = [g(a)]
+        g = g(a)
         
         t = [a]
         w = [y0]
-        err = [0]
+        
         for i in range(n):
-                print(w[i])
-                g.append(g(t[i]))
+                
+                
                 w.append(w[i] + h*f(t[i],w[i]))
                 t.append(t[i] + h)
 
-        err.append(g[i] - w[i])
+        err = (g - w[n])
         return err
 
 
 
-def trap(f,a,b,y0,n):
-        h = (b-a) / float(n)
+def trap(f,g,a,b,y0,n,h):
+        g = g(a)
         
         t = [a]
         w = [y0]
         for i in range(n):
-                print(w[i])
+                
                 w.append(w[i] + (h/2)*(f(t[i],w[i])+ f((t[i]+h), w[i]+ h*(f(t[i],w[i])))))
                 t.append(t[i] + h)
-
-        return w,t
+        err = (g - w[n])
+        return err
 
 def step(k):
         return 0.1 * 2**(-k)
@@ -64,21 +64,52 @@ def generateh(x,n):
 
 h = generateh(x,500)
 
-
+print(h)
 
 #for every h[i] I need a err[i] that corresponds with that h-value, 4 iterations
 
-def generr(h,n,f,g):
+def generr(h,n,f,g,method):
         err = [0]
         for i in range(n):
-                err.append(Euler(f,g,0,1,0,4,h[i])
+                err.append(abs(method(f,g,0,1,0,4,h[i])))
 
         return err
 
-print(generr(h,500,f,g))
+
+
+error = generr(h,500,f,g,Euler)
                         
                            
-        
+#have arrays h[i] for x and error[i] for y make log log plot
+
+
+
+fig,ax = pyplot.subplots()
+ax.plot(h,error)
+pyplot.suptitle('Euler Global Truncation Error')
+pyplot.title('as a function of h = 0.1 * 2^-k 0<k<5')
+pyplot.xscale('log')
+pyplot.yscale('log')
+ax.set_xlabel('h-value')
+ax.set_ylabel('Global Truncation Error')
+pyplot.show()
+
+
+
+
+#now for trap method
+error2  = generr(h,500,f,g,trap)
+
+fig,ax = pyplot.subplots()
+ax.plot(h,error2)
+pyplot.suptitle('Trapezoid Global Truncation Error')
+pyplot.title('as a function of h = 0.1 * 2^-k 0<k<5')
+pyplot.xscale('log')
+pyplot.yscale('log')
+ax.set_xlabel('h-value')
+ax.set_ylabel('Global Truncation Error')
+pyplot.show()
+
 
 
         
