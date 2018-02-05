@@ -17,7 +17,8 @@ def g(t):
 
 def f(t,w):
 	return 4*t - 2*w
-	
+
+#Euler approximation to ODE returns global truncation error at the last step	
 def Euler(f,g,a,b,y0,n,h):
         g = g(a)
         
@@ -34,7 +35,7 @@ def Euler(f,g,a,b,y0,n,h):
         return err
 
 
-
+#Trapezoid method to approximate ODE returns global truncaiton erro at last step
 def trap(f,g,a,b,y0,n,h):
         g = g(a)
         
@@ -47,13 +48,14 @@ def trap(f,g,a,b,y0,n,h):
         err = (g - w[n])
         return err
 
+# h as a function of k
 def step(k):
         return 0.1 * 2**(-k)
 
-
+# generate 500 k values from  0 to 5
 x = np.linspace(0,5,num = 500)
-print(x)
 
+#Function to create h array
 def generateh(x,n):
         h = [0]
         for i in range (n):
@@ -64,10 +66,8 @@ def generateh(x,n):
 
 h = generateh(x,500)
 
-print(h)
 
-#for every h[i] I need a err[i] that corresponds with that h-value, 4 iterations
-
+#At h value find the global truncation error
 def generr(h,n,f,g,method):
         err = [0]
         for i in range(n):
@@ -80,9 +80,9 @@ def generr(h,n,f,g,method):
 error = generr(h,500,f,g,Euler)
                         
                            
-#have arrays h[i] for x and error[i] for y make log log plot
 
 
+#Euler plot
 
 fig,ax = pyplot.subplots()
 ax.plot(h,error)
