@@ -45,14 +45,22 @@ for i in range(n):
     u[i+1,:] = rk4_step(uf,t[i],u[i,:],h)
     v[i+1,:] = rk4_step(vf,t[i],v[i,:],h)
 
+<<<<<<< HEAD
 for i in range(n+1):
+=======
+ for i in range(n+1):
+>>>>>>> c42695a47f5ba7290f8d15ad29e20adf903ed21e
     w[i] = u[i,0]+(I[1]-u[n,0])*v[i,0]/v[n,0]
     y[i] = ytrue(t[i])
     err[i] = abs(y[i]-w[i])
 
 print(u)
 print(v)
+<<<<<<< HEAD
 
+=======
+'''
+>>>>>>> c42695a47f5ba7290f8d15ad29e20adf903ed21e
 print('\n')
 print(' t  |      u     |      v     |      w     |      y     |    err')
 print('----+------------+------------+------------+------------+-----------')
@@ -74,3 +82,7 @@ ax[1].set_ylabel('error')
 ax[1].set_xlabel('t')
 ax[1].set_yscale('log')
 pyplot.show()
+<<<<<<< HEAD
+=======
+'''
+>>>>>>> c42695a47f5ba7290f8d15ad29e20adf903ed21e
