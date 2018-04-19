@@ -37,7 +37,9 @@ def upperHessenberg(A):
       #print(A)
   return A
 
+
 a = upperHessenberg(a)
+
 
 b = upperHessenberg(b)
 
@@ -45,22 +47,23 @@ c = upperHessenberg(c)
 
 
 
-def shiftedQR(A):
+def shiftedQR(A,s):
     n = len(A)
     for i in range(0,10):
       I = np.eye(n)
-      s = 1#2#A[n-1,n-1]
+      #s = A[n-1,n-1]
       B = A - s*I
       Q,R = np.linalg.qr(B)
       A = R*Q + s*I
     return A
 
-#print(shiftedQR(a))
-#print(Al)
+print(shiftedQR(a,1))
+print(Al)
 
-#print(shiftedQR(b))
-#print(Bl)
 
-print(shiftedQR(c))
+print(shiftedQR(b,2))
+print(Bl)
+
+print(shiftedQR(c,1))
 print(Cl)
 
