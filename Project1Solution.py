@@ -28,7 +28,7 @@ def Euler(f ,r, a, b, w0,z0, n):
 
     for i in range(n):
         z.append(z[i] + h* r(t[i],w[i]))
-        w.append(w[i] + h * f(t[i], w[i],z[i])) 
+        w.append(w[i] + h * f(t[i], w[i],z[i]))
         t.append(t[i] + h)
 
 
@@ -44,7 +44,7 @@ def trap(f,r, a, b, w0,z0, n):
     w = [w0]
     for i in range(n):
         z.append(z[i] + (h / 2) * (r(t[i], w[i]) + r((t[i] + h), w[i] + h * (r(t[i], w[i])))))
-        w.append(w[i] + (h / 2) * (f(t[i], w[i],z[i]) + f((t[i] + h), w[i] + h * (f(t[i], w[i],z[i])),z[i]))) 
+        w.append(w[i] + (h / 2) * (f(t[i], w[i],z[i]) + f((t[i] + h), w[i] + h * (f(t[i], w[i],z[i])),z[i])))
         t.append(t[i] + h)
 
 
@@ -87,7 +87,7 @@ t,x,v= trap(f,r,0 ,1,0,1, 500)
 t,c,p = rk4(f,r,0 ,1, 0,1, 500)
 y = [1]
 for i in range(500):
-    
+
     y.append( g(t[i]))
 
 
