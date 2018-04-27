@@ -1,3 +1,4 @@
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np 
 import matplotlib.pyplot as pyplot
 import random 
@@ -17,9 +18,15 @@ x = random.getstate()
 
 #print(x)
 
-#psuedo random number (mod 31)
 
-def mod31(seed,A,b,m,n):
+# linear Congruential generator (LCG)
+
+#x[i] =( Ax[i] + b ) mod m 
+# u = x[i] / m 
+
+
+
+def LCG(seed,A,b,m,n):
     x = [seed]
     u = []
     m = float(m)
@@ -30,15 +37,10 @@ def mod31(seed,A,b,m,n):
     
 
 y31 = np.zeros(30)
-y31 = mod31(3,13,0,31.0,30)
+y31 = LCG(3,13,0,31.0,30)
 print(y31)
 
 
-
-# linear Congruential generator (LCG)
-
-#x[i] =( Ax[i] + b ) mod m 
-# u = x[i] / m 
 
 #approximate area under curve y = x^2
 
@@ -67,7 +69,7 @@ pyplot.show()
 
 #Mersenne Prime
 
-m = mod31(3,7**5,0,2**31 - 1,10000)
+m = LCG(3,7**5,0,2**31 - 1,10000)
 n = np.arange(10000)
 fig,ax = pyplot.subplots()
 pyplot.title('Mersenne Prime')
@@ -76,4 +78,25 @@ pyplot.xlabel('x')
 pyplot.ylabel('y')
 
 
-pyplot.show() 
+pyplot.show()
+
+#create 3D scatter Plot
+#triples
+x =[]
+
+y = []
+
+z = []
+n = len(m)
+for i in range(n-2):
+   x.append( m[i])
+   y.append( m[i+1] )
+   z.append( m[i+2]) 
+
+
+fig = pyplot.figure()
+bx = fig.add_subplot(111,projection ='3d')
+bx.scatter(x,y,z)
+pyplot.title('3d scatter')
+
+pyplot.show()
