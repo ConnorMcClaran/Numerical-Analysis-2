@@ -97,6 +97,8 @@ for i in range(n-2):
 fig = pyplot.figure()
 bx = fig.add_subplot(111,projection ='3d')
 bx.scatter(x,y,z)
-pyplot.title('3d scatter')
-
+pyplot.title('LCG')
+bx.set_xlabel('x')
+bx.set_ylabel('y')
+bx.set_zlabel('z')
 pyplot.show()
