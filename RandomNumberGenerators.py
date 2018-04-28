@@ -10,7 +10,7 @@ import random
 
 # analyze and create random number generators 
 
-
+#random seed based on system time
 random.seed(a = None)
 
 
@@ -38,7 +38,7 @@ def LCG(seed,A,b,m,n):
 
 y31 = np.zeros(30)
 y31 = LCG(3,13,0,31.0,30)
-print(y31)
+
 
 
 
@@ -82,23 +82,31 @@ pyplot.show()
 
 #create 3D scatter Plot
 #triples
-x =[]
 
-y = []
+#Randu generator
+v = LCG(3,65539,0,2**31,10000)
 
-z = []
-n = len(m)
-for i in range(n-2):
-   x.append( m[i])
-   y.append( m[i+1] )
-   z.append( m[i+2]) 
+def createTriple(m):
+    x =[]
+    y = []
+    z = []
+    n = len(m)
+    for i in range(n-2):
+        x.append( m[i])
+        y.append( m[i+1] )
+        z.append( m[i+2]) 
+    return x,y,z
+
 
 
 fig = pyplot.figure()
 bx = fig.add_subplot(111,projection ='3d')
+x,y,z = createTriple(m)
 bx.scatter(x,y,z)
 pyplot.title('LCG')
 bx.set_xlabel('x')
 bx.set_ylabel('y')
 bx.set_zlabel('z')
+
+
 pyplot.show()
