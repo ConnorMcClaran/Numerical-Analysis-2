@@ -71,12 +71,13 @@ pyplot.show()
 
 m = LCG(3,7**5,0,2**31 - 1,10000)
 n = np.arange(10000)
+'''
 fig,ax = pyplot.subplots()
 pyplot.title('Mersenne Prime')
 pyplot.scatter(n,m)
 pyplot.xlabel('x')
 pyplot.ylabel('y')
-
+'''
 
 pyplot.show()
 
@@ -84,7 +85,7 @@ pyplot.show()
 #triples
 
 #Randu generator
-v = LCG(3,65539,0,2**31,10000)
+v = LCG(1,65539,0,2**31,10000)
 
 def createTriple(m):
     x =[]
@@ -102,11 +103,25 @@ def createTriple(m):
 fig = pyplot.figure()
 bx = fig.add_subplot(111,projection ='3d')
 x,y,z = createTriple(m)
-bx.scatter(x,y,z)
+bx.scatter(x,y,z,color = 'green')
 pyplot.title('LCG')
 bx.set_xlabel('x')
 bx.set_ylabel('y')
 bx.set_zlabel('z')
 
-
 pyplot.show()
+
+
+
+
+
+fig = pyplot.figure()
+cx = fig.add_subplot(111,projection = '3d')
+q,w,e = createTriple(v)
+cx.scatter(q,w,e,marker='^')
+pyplot.title('randu')
+cx.set_xlabel('x')
+cx.set_ylabel('y')
+cx.set_zlabel('z')
+pyplot.show()
+
