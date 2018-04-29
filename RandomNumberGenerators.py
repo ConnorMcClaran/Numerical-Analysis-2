@@ -55,7 +55,7 @@ def MonteCarloType1(u):
 
 # x = MonteCarloType1(y31)     
 #print(x)  
-
+'''
 ## plot - simple psuedo random generator (mod31)##
 n = np.arange(30)                                                                      
 fig,dx = pyplot.subplots()
@@ -68,7 +68,7 @@ dx.legend()
 pyplot.show()
 
 #Mersenne Prime
-
+'''
 m = LCG(3,7**5,0,2**31 - 1,10000)
 n = np.arange(10000)
 '''
@@ -98,13 +98,13 @@ def createTriple(m):
         z.append( m[i+2]) 
     return x,y,z
 
-
+'''
 
 fig = pyplot.figure()
 bx = fig.add_subplot(111,projection ='3d')
 x,y,z = createTriple(m)
 bx.scatter(x,y,z,color = 'green')
-pyplot.title('LCG')
+pyplot.title('LCG,minimal standard')
 bx.set_xlabel('x')
 bx.set_ylabel('y')
 bx.set_zlabel('z')
@@ -119,9 +119,70 @@ fig = pyplot.figure()
 cx = fig.add_subplot(111,projection = '3d')
 q,w,e = createTriple(v)
 cx.scatter(q,w,e,marker='^')
-pyplot.title('randu')
+pyplot.title('Randu')
 cx.set_xlabel('x')
 cx.set_ylabel('y')
 cx.set_zlabel('z')
 pyplot.show()
+'''
+
+
+def MC1(x):
+    n = len(x)
+    y = []
+    s = 0.0
+    for i in range(n):
+        y.append((x[i])**2)
+        s += y[i] 
+    avg = s/(float(n) )
+    return np.absolute(avg-(1/3.0))
+z1 = []
+z2 = []
+z3 = []
+z4 = []
+z5 = []
+z6 = []
+
+
+for i in range(30):
+
+    x1 = LCG(5,7*5,0,2**31 -1,10**2)
+    
+    x2 = LCG(5,65539,0,2**31,10**2)
+
+
+    x3 = LCG(5,7*5,0,2**31 -1,10**4)
+
+    x4 = LCG(5,65539,0,2**31,10**4)
+
+    x5 = LCG(5,7*5,0,2**31 -1,10**6)
+    x6 = LCG(5,65539,0,2**31,10**6) 
+    z1.append(MC1(x1))
+    z2.append(MC1(x2))
+    z3.append(MC1(x3))
+    z4.append(MC1(x4))
+    z5.append(MC1(x5))  
+    z6.append(MC1(x6))                                
+
+
+tens = [10**2,10**4,10**6]
+m = [np.mean(z1),np.mean(z3),np.mean(z5)]
+m2 = [np.mean(z2),np.mean(z4),np.mean(z6)]
+fig,ex = pyplot.subplots()
+pyplot.title('Error')
+ex.set_yscale('log')
+ex.set_xscale('log')
+pyplot.ylabel('Error')
+pyplot.xlabel('Number of points N')
+ex.plot(tens,m,marker = 'o',linestyle = '--',label = 'MSG')
+ex.plot(tens,m2,marker = '^',linestyle = '--',label = 'Randu')
+ex.legend()
+pyplot.show()
+
+
+
+
+
+
+
 
