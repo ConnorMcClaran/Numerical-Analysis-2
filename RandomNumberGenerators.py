@@ -133,26 +133,27 @@ def MC1(x):
     s = 0.0
     for i in range(n):
         y.append((x[i])**2)
-        s += y[i] 
-    avg = s/(float(n) )
-    return np.absolute(avg-(1/3.0))
+    return np.absolute(np.mean(y)-(1/3.0))
 z1 = []
 z2 = []
 z3 = []
 z4 = []
 z5 = []
 z6 = []
+z7 = []
+z8 = []
+z9 = []
 
 
 for i in range(30):
 
-    x1 = LCG(5,7*5,0,2**31 -1,10**2)
-    
+    x1 = LCG(5,7*5,0,2**31 -1,10**2) 
+#    n1 = np.random.rand(1,10**2)
     x2 = LCG(5,65539,0,2**31,10**2)
-
+#    n2 = np.random.rand(1,10**4)
 
     x3 = LCG(5,7*5,0,2**31 -1,10**4)
-
+#    n3 = np.random.rand(1,10**6)
     x4 = LCG(5,65539,0,2**31,10**4)
 
     x5 = LCG(5,7*5,0,2**31 -1,10**6)
@@ -162,22 +163,29 @@ for i in range(30):
     z3.append(MC1(x3))
     z4.append(MC1(x4))
     z5.append(MC1(x5))  
-    z6.append(MC1(x6))                                
+    z6.append(MC1(x6))
+#    z7.append(MC1(n1))
+#    z8.append(MC1(n2))
+#    z9.append(MC1(n3))                                
 
 
 tens = [10**2,10**4,10**6]
-m = [np.mean(z1),np.mean(z3),np.mean(z5)]
-m2 = [np.mean(z2),np.mean(z4),np.mean(z6)]
+m = [np.mean(z1),np.mean(z3),np.mean(z5)]#minmal standard
+m2 = [np.mean(z2),np.mean(z4),np.mean(z6)] # Randu
+m3 = [np.mean(z7),np.mean(z8),np.mean(z9)] # np.rand
 fig,ex = pyplot.subplots()
-pyplot.title('Error')
+pyplot.title('Type 1 Error')
 ex.set_yscale('log')
 ex.set_xscale('log')
 pyplot.ylabel('Error')
 pyplot.xlabel('Number of points N')
-ex.plot(tens,m,marker = 'o',linestyle = '--',label = 'MSG')
+ex.plot(tens,m,marker = 'o',linestyle = '--',label = 'MinStandard')
 ex.plot(tens,m2,marker = '^',linestyle = '--',label = 'Randu')
+#ex.plot(tens,m3,marker = 'p',linestyle = '--',label = 'numpy')
 ex.legend()
 pyplot.show()
+
+
 
 
 
