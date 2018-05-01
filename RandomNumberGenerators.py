@@ -39,23 +39,9 @@ def LCG(seed,A,b,m,n):
 y31 = np.zeros(30)
 y31 = LCG(3,13,0,31.0,30)
 
-
-
-
-#approximate area under curve y = x^2
-
-def MonteCarloType1(u):
-    n = len(u)
-    m = 0.0
-    for i in range(n):
-         m +=(1/float(n))* (u[i])
      
-    
-    return m 
 
-# x = MonteCarloType1(y31)     
-#print(x)  
-'''
+
 ## plot - simple psuedo random generator (mod31)##
 n = np.arange(30)                                                                      
 fig,dx = pyplot.subplots()
@@ -68,16 +54,16 @@ dx.legend()
 pyplot.show()
 
 #Mersenne Prime
-'''
+
 m = LCG(3,7**5,0,2**31 - 1,10000)
 n = np.arange(10000)
-'''
+
 fig,ax = pyplot.subplots()
 pyplot.title('Mersenne Prime')
 pyplot.scatter(n,m)
 pyplot.xlabel('x')
 pyplot.ylabel('y')
-'''
+
 
 pyplot.show()
 
@@ -98,7 +84,7 @@ def createTriple(m):
         z.append( m[i+2]) 
     return x,y,z
 
-'''
+
 
 fig = pyplot.figure()
 bx = fig.add_subplot(111,projection ='3d')
@@ -124,7 +110,7 @@ cx.set_xlabel('x')
 cx.set_ylabel('y')
 cx.set_zlabel('z')
 pyplot.show()
-'''
+
 
 
 def MC1(x):
@@ -143,17 +129,23 @@ z6 = []
 z7 = []
 z8 = []
 z9 = []
+z10 = []
+z11 = []
+z12 = []
 
 
 for i in range(30):
 
     x1 = LCG(5,7*5,0,2**31 -1,10**2) 
-#    n1 = np.random.rand(1,10**2)
+    n1 = np.random.rand(10**2)
+    
     x2 = LCG(5,65539,0,2**31,10**2)
-#    n2 = np.random.rand(1,10**4)
+    n2 = np.random.rand(10**4)
 
+    
     x3 = LCG(5,7*5,0,2**31 -1,10**4)
-#    n3 = np.random.rand(1,10**6)
+    n3 = np.random.rand(10**6)
+    
     x4 = LCG(5,65539,0,2**31,10**4)
 
     x5 = LCG(5,7*5,0,2**31 -1,10**6)
@@ -164,15 +156,19 @@ for i in range(30):
     z4.append(MC1(x4))
     z5.append(MC1(x5))  
     z6.append(MC1(x6))
-#    z7.append(MC1(n1))
-#    z8.append(MC1(n2))
-#    z9.append(MC1(n3))                                
+    z7.append(MC1(n1))
+    z8.append(MC1(n2))
+    z9.append(MC1(n3))
+  
+
+                   
 
 
 tens = [10**2,10**4,10**6]
 m = [np.mean(z1),np.mean(z3),np.mean(z5)]#minmal standard
 m2 = [np.mean(z2),np.mean(z4),np.mean(z6)] # Randu
-m3 = [np.mean(z7),np.mean(z8),np.mean(z9)] # np.rand
+m3 = [np.mean(z7),np.mean(z8),np.mean(z9)] # np.random.rand
+
 fig,ex = pyplot.subplots()
 pyplot.title('Type 1 Error')
 ex.set_yscale('log')
@@ -181,7 +177,8 @@ pyplot.ylabel('Error')
 pyplot.xlabel('Number of points N')
 ex.plot(tens,m,marker = 'o',linestyle = '--',label = 'MinStandard')
 ex.plot(tens,m2,marker = '^',linestyle = '--',label = 'Randu')
-#ex.plot(tens,m3,marker = 'p',linestyle = '--',label = 'numpy')
+ex.plot(tens,m3,marker = 'p',linestyle = '--',label = 'np.rand')
+
 ex.legend()
 pyplot.show()
 
