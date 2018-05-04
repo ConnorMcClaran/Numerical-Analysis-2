@@ -4,37 +4,40 @@ from mpl_toolkits.mplot3d import Axes3D
 
 #Connor McClaran
 #Optimizers
-
-
-
+#gss
+#Newton method
+#Gradient Decent
 
 #f(x,y = (1-x**2) + 100*(y-x**2)**2
 
 
 def f(x,y):
     return (1 - x**2) + 100*(((y - x**2))**2)
-
+#df/dx
 def fpx1(x,y):
     return -2*x + 400*x**3 - 400*x*y
-def fpy2(x,y):
+#df/dy
+def fpy1(x,y):
     return 200*y + 200*x**2
-def T(x,y):
-    return  np.sin((0.5*x**2) - (1/4.0)*y**2 +3)*np.cos(2*x + 1 - np.exp(y))
-y = np.linspace(0.0,2.0,num = 100)
-x = np.linspace(-2.0,2.0,num = 100)
-t = []
-z = []
-for i in range(100):
-    z.append(f(x[i],y[i]))
-    t.append(T(x,y))
 
-I = [-2.0,2.0]
+y = np.linspace(0.0,2.0,100)
+x = np.linspace(-2.0,2.0,100)
+
+z = np.zeros((100,100))
+for i in range(100):
+    for j in range(100):
+
+        z[i,j] = f(x[i],y[j])
+
+X,Y = np.meshgrid(x,y)
+
+
 fig  = pyplot.figure()
 
 banana = fig.add_subplot(111,projection = '3d')
 pyplot.title('f(x,y) on x[-2.0,2.0] y[0,2.0]')
-banana.plot(x,y,z,label = 'banana')
-#banana.plot(x,t,label = 'surface')
+banana.plot_surface(X,Y,z)
+
 banana.set_xlabel('x')
 pyplot.legend()
 banana.set_ylabel('y')
@@ -74,13 +77,13 @@ def bisection(x1,x2,y1,y2,fpx1,tol):
     k = 0
     while abs(x1-x2) > tol:
         if fa == 0.0:
-            return x1 
+            return x1
 
         if fb == 0.0:
             return x2
 
         c = (x1+x2)/(2.0)
-        fc = f(c,y1) 
+        fc = f(c,y1)
 
         if fa*fc < 0.0:
             x2 = c
@@ -91,10 +94,11 @@ def bisection(x1,x2,y1,y2,fpx1,tol):
         k = k+1
     return (x2+x1)/2.0
 
-r = bisection(-2.0,2.0,0,2.0,f,0.5*10**-5)
+r = bisection(-2.0,0.0,0,2.0,f,0.5*10**-5)
 
 #x = gss(I[0],I[1],f,0.5*10**-5)
-
+'''
 print(r)
 print(f(r,0))
 #print(x)
+'''
