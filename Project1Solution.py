@@ -27,8 +27,8 @@ def Euler(f ,r, a, b, w0,z0, n):
     w = [w0]
 
     for i in range(n):
-        z.append(z[i] + h* r(t[i],w[i]))
-        w.append(w[i] + h * f(t[i], w[i],z[i]))
+        z.append(z[i] + h* w[i])
+        w.append(w[i] + h * f(t[i], w[i],z[i+1]))
         t.append(t[i] + h)
 
 
@@ -43,8 +43,8 @@ def trap(f,r, a, b, w0,z0, n):
     t = [a]
     w = [w0]
     for i in range(n):
-        z.append(z[i] + (h / 2) * (r(t[i], w[i]) + r((t[i] + h), w[i] + h * (r(t[i], w[i])))))
-        w.append(w[i] + (h / 2) * (f(t[i], w[i],z[i]) + f((t[i] + h), w[i] + h * (f(t[i], w[i],z[i])),z[i])))
+        z.append(z[i] + (h / 2) * ( w[i] + w[i] + h*w[i] ))
+        w.append(w[i] + (h / 2) * (f(t[i], w[i],z[i+1]) + f((t[i] + h), w[i] + h * (f(t[i], w[i],z[i+1])),z[i+1])))
         t.append(t[i] + h)
 
 
@@ -78,15 +78,15 @@ pyplot.title('Solution on [0,1]')
 
 pyplot.xlabel('t')
 pyplot.ylabel('y')
-t,z,w= Euler(f,r,0 ,1, 0,1, 500)
+t,z,w= Euler(f,r,0 ,1, 0,1, 100)
 
 
 
-t,x,v= trap(f,r,0 ,1,0,1, 500)
+t,x,v= trap(f,r,0 ,1,0,1, 100)
 
-t,c,p = rk4(f,r,0 ,1, 0,1, 500)
+t,c,p = rk4(f,r,0 ,1, 0,1, 100)
 y = [1]
-for i in range(500):
+for i in range(100):
 
     y.append( g(t[i]))
 
@@ -104,22 +104,59 @@ ax.legend()
 Eulererr = [0]
 Traperr = [0]
 RK4err  =[0]
-for i in range(500):
-    Eulererr.append(y[i]-z[i])
-    Traperr.append(y[i]-x[i])
-    RK4err.append(y[i]-c[i])
+for i in range(100):
+    Eulererr.append(np.absolute(y[i]-z[i]))
+    Traperr.append(np.absolute(y[i]-x[i]))
+    RK4err.append(np.absolute(y[i]-c[i]))
+
+
 
 fig,dx = pyplot.subplots()
-pyplot.title('Error')
+pyplot.title('Error h = 0.01')
 dx.set_yscale('log')
 pyplot.xlabel('t')
 pyplot.ylabel('error')
-dx.plot(t,np.absolute(Eulererr),color = 'red',label = 'Euler Error')
-dx.plot(t,np.absolute(Traperr),color = 'green',label = 'Trap Error')
-dx.plot(t,np.absolute(RK4err),color = 'purple',label = 'RK4 Error')
+dx.plot(t,(Eulererr),color = 'red',label = 'Euler Error')
+dx.plot(t,(Traperr),color = 'green',label = 'Trap Error')
+dx.plot(t,(RK4err),color = 'purple',label = 'RK4 Error')
 dx.legend()
 
 pyplot.show()
 
 
 
+t,z,w= Euler(f,r,0 ,1, 0,1, 1000)
+
+
+
+t,x,v= trap(f,r,0 ,1,0,1, 1000)
+
+t,c,p = rk4(f,r,0 ,1, 0,1, 1000)
+y = [1]
+for i in range(1000):
+
+    y.append( g(t[i]))
+
+
+
+Eulererr = [0]
+Traperr = [0]
+RK4err  =[0]
+for i in range(1000):
+    Eulererr.append(np.absolute(y[i]-z[i]))
+    Traperr.append(np.absolute(y[i]-x[i]))
+    RK4err.append(np.absolute(y[i]-c[i]))
+
+
+
+fig,ex = pyplot.subplots()
+pyplot.title('Error h = 0.001')
+ex.set_yscale('log')
+pyplot.xlabel('t')
+pyplot.ylabel('error')
+ex.plot(t,(Eulererr),color = 'red',label = 'Euler Error')
+ex.plot(t,(Traperr),color = 'green',label = 'Trap Error')
+ex.plot(t,(RK4err),color = 'purple',label = 'RK4 Error')
+ex.legend()
+
+pyplot.show()
