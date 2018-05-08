@@ -19,6 +19,11 @@ def fpx1(x,y):
 #df/dy
 def fpy1(x,y):
     return 200*y + 200*x**2
+def J(x,y):
+    return [fpx1,fpy1]
+def H(x,y):
+    return [[1200*x**2 - 400*y -2,-400*x],[400*x,200]]
+
 
 y = np.linspace(0.0,2.0,100)
 x = np.linspace(-2.0,2.0,100)
@@ -44,7 +49,13 @@ banana.set_ylabel('y')
 banana.set_zlabel('f(x,y)')
 pyplot.show()
 
-
+def NewtonsMin(x1,x2,y1,y2,tol):
+    for W in [[x1,x2], [y1,y2]]:
+        s = np.linalg.solve(np.multiply(-1,H(W[0],W[1]),J(W[0],W[1])))
+        while np.linalg.norm(s)> tol:
+            W += s
+            s = np.linalg.solve(np.multiply(-1,H(W[0],W[1]),J(W[0],W[1])))
+        return W
 
 #Minimize with Golden Section Search
 
@@ -94,11 +105,13 @@ def bisection(x1,x2,y1,y2,fpx1,tol):
         k = k+1
     return (x2+x1)/2.0
 
-r = bisection(-2.0,0.0,0,2.0,f,0.5*10**-5)
 
-#x = gss(I[0],I[1],f,0.5*10**-5)
-'''
-print(r)
-print(f(r,0))
-#print(x)
-'''
+
+r1 = NewtonsMin(-2.0,2.0,0.0,2.0,0.5*10**-5)
+
+print(r1)
+
+
+
+
+
